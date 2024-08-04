@@ -6,7 +6,7 @@
     # for a sane value of 100 commits)
     depth: $DEPTH_DEFAULT
   remotes:
-    origin: https://github.com/odoo/odoo.git
+    origin: https://github.com/Spearhead-Odoo/odoo.git
   target: origin $ODOO_VERSION
   merges:
     - origin $ODOO_VERSION
@@ -16,7 +16,110 @@
   defaults:
     depth: $DEPTH_DEFAULT
   remotes:
-    origin: https://$GIT_TOKEN@github.com/odoo/enterprise.git
+    origin: https://$GIT_TOKEN@github.com/Spearhead-Odoo/enterprise.git
   target: origin $ODOO_VERSION
   merges:
     - origin $ODOO_VERSION
+# repositorios propios
+{% if odoo_version == 13.0 -%}
+./app_store:
+  defaults:
+    depth: $DEPTH_MERGE
+  remotes:
+    origin: https://$GIT_TOKEN@github.com/Spearhead-Odoo/app_store.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+    - origin 13.0-i18n
+./flow_scm:
+  defaults:
+    depth: $DEPTH_MERGE
+  remotes:
+    origin: https://$GIT_TOKEN@github.com/Spearhead-Odoo/flow_scm.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+./localizacion_ec:
+  defaults:
+    depth: $DEPTH_DEFAULT
+  remotes:
+    origin: https://$GIT_TOKEN@github.com/Spearhead-Odoo/localizacion_ec.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+./hr_addons:
+  defaults:
+    depth: $DEPTH_DEFAULT
+  remotes:
+    origin: https://$GIT_TOKEN@github.com/Spearhead-Odoo/hr_addons.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+./custom_tools:
+  defaults:
+    depth: $DEPTH_MERGE
+  remotes:
+    origin: https://$GIT_TOKEN@github.com/Spearhead-Odoo/custom_tools.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+./themes:
+  defaults:
+    depth: $DEPTH_DEFAULT
+  remotes:
+    origin: https://$GIT_TOKEN@github.com/Spearhead-Odoo/themes.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+./merp:
+  defaults:
+    depth: $DEPTH_MERGE
+  remotes:
+    origin: https://$GIT_TOKEN@github.com/Spearhead-Odoo/merp.git
+    oca: https://github.com/ventor-tech/merp.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+    - origin 13.0-i18n
+{%- elif odoo_version >= 17.0 %}
+./app_store:
+  defaults:
+    depth: $DEPTH_DEFAULT
+  remotes:
+    origin: https://$GIT_TOKEN@github.com/Spearhead-Odoo/app_store.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+./flow_scm:
+  defaults:
+    depth: $DEPTH_DEFAULT
+  remotes:
+    origin: https://$GIT_TOKEN@github.com/Spearhead-Odoo/flow_scm.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+./merp:
+  defaults:
+    depth: $DEPTH_DEFAULT
+  remotes:
+    origin: https://$GIT_TOKEN@github.com/Spearhead-Odoo/merp.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+./odoo_generic_addons:
+  defaults:
+    depth: $DEPTH_DEFAULT
+  remotes:
+    origin: https://$GIT_TOKEN@github.com/Spearhead-Odoo/odoo_generic_addons.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+./theme_prime:
+  defaults:
+    depth: $DEPTH_DEFAULT
+  remotes:
+    origin: https://$GIT_TOKEN@github.com/Spearhead-Odoo/theme_prime.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+{% endif -%}

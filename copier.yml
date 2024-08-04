@@ -172,7 +172,7 @@ project_author:
     Tell me who you are.
 
     If private modules do not include this author, pylint will warn you.
-  default: Tecnativa
+  default: Spearhead
 
 project_name:
   type: str
@@ -221,7 +221,7 @@ odoo_oci_image:
     you are not using a registry.
 
     Example: docker.io/myteam/example-odoo
-  default: "{{ docker_registry }}/{{ project_author.lower() }}/{{ project_name }}"
+  default: "{{ docker_registry }}/spearhead-odoo/odoo"
 
 gitlab_url:
   type: str
@@ -237,7 +237,7 @@ gitlab_url:
 
 ssl_email:
   type: str
-  default: ssl@example.com
+  default: clopez@spearhead.global
   help: >-
     Email to SSL?
 

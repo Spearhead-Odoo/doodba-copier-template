@@ -29,6 +29,8 @@ services:
       LIMIT_MEMORY_HARD: "${LIMIT_MEMORY_HARD-{{ limit_memory_hard }}}"
       LIMIT_MEMORY_SOFT: "${LIMIT_MEMORY_SOFT-{{ limit_memory_soft }}}"
       SERVER_WIDE_MODULES: "${SERVER_WIDE_MODULES-{{ server_wide_modules }}}"
+      DEFAULT_REPO_PATTERN: "https://github.com/Spearhead-Odoo/{}.git"
+      DEFAULT_REPO_PATTERN_ODOO: "https://github.com/Spearhead-Odoo/odoo.git"
     tty: true
     volumes:
       - filestore:/var/lib/odoo:z
