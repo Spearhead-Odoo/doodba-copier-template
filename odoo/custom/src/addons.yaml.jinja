@@ -30,7 +30,9 @@ stock-logistics-transport: "*"
 stock-logistics-warehouse: "*"
 stock-logistics-workflow: "*"
 web: "*"
+{%- if odoo_version  >= 17.0 %}
 l10n-ecuador: "*"
+{% endif -%}
 # modulos propios
 app_store: "*"
 flow_scm: "*"
