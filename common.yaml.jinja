@@ -16,6 +16,8 @@ services:
         UID: "${UID:-1000}"
         GID: "${GID:-1000}"
         GIT_TOKEN: "${GIT_TOKEN}"
+        DEFAULT_REPO_PATTERN: "https://github.com/Spearhead-Odoo/{}.git"
+        DEFAULT_REPO_PATTERN_ODOO: "https://github.com/Spearhead-Odoo/odoo.git"
     environment:
       EMAIL_FROM: "{{ smtp_default_from|default("", true) }}"
       PGDATABASE: &dbname {{ postgres_dbname }}
