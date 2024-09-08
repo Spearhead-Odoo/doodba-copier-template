@@ -76,10 +76,59 @@
     depth: $DEPTH_MERGE
   remotes:
     origin: https://$GIT_TOKEN@github.com/Spearhead-Odoo/merp.git
-    oca: https://github.com/ventor-tech/merp.git
   target: origin $ODOO_VERSION
   merges:
     - origin $ODOO_VERSION
+    - origin 13.0-i18n
+./bank-payment:
+  defaults:
+    depth: $DEPTH_MERGE
+  remotes:
+    origin: https://github.com/Spearhead-Odoo/bank-payment.git
+    oca: https://github.com/OCA/bank-payment.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+    - oca refs/pull/1013/head
+./purchase-workflow:
+  defaults:
+    depth: $DEPTH_MERGE
+  remotes:
+    origin: https://github.com/Spearhead-Odoo/purchase-workflow.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+    - origin 13.0-purchase-request-date
+    - origin 13.0-i18n
+./sale-workflow:
+  defaults:
+    depth: $DEPTH_MERGE
+  remotes:
+    origin: https://github.com/Spearhead-Odoo/sale-workflow.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+    - origin 13.0-i18n
+    - origin 13.0-lot-selection
+./server-ux:
+  defaults:
+    depth: $DEPTH_MERGE
+  remotes:
+    origin: https://github.com/Spearhead-Odoo/server-ux.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+    - origin 13.0-i18n
+./stock-logistics-warehouse:
+  defaults:
+    depth: $DEPTH_MERGE
+  remotes:
+    origin: https://github.com/Spearhead-Odoo/stock-logistics-warehouse.git
+    oca: https://github.com/OCA/stock-logistics-warehouse.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+    - oca refs/pull/1381/head
     - origin 13.0-i18n
 {%- elif odoo_version >= 17.0 %}
 ./app_store:

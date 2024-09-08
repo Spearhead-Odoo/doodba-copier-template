@@ -1,15 +1,41 @@
 odoo: "*"
 enterprise: "*"
 # modulos OCA
+account-analytic: "*"
+account-financial-reporting: "*"
+account-financial-tools: "*"
+{%- if odoo_version  > 16.0 %}
 account-invoice-reporting: "*"
 account-invoicing: "*"
+{% endif -%}
 account-payment: "*"
 account-reconcile: "*"
 bank-payment: "*"
 brand: "*"
+{% if odoo_version == 13.0 -%}
+e-commerce:
+  - "website_sale_order_type"
+{% endif -%}
+hr: "*"
+hr-holidays: "*"
+partner-contact: "*"
 product-attribute: "*"
 purchase-reporting: "*"
+{% if odoo_version == 13.0 -%}
+purchase-workflow:
+  - "purchase_all_shipments"
+  - "purchase_discount"
+  - "purchase_force_invoiced"
+  - "purchase_last_price_info"
+  - "purchase_open_qty"
+  - "purchase_order_type"
+  - "purchase_request"
+  - "purchase_request_tier_validation"
+  - "purchase_tier_validation"
+  - "purchase_tier_validation_forward"
+{%- else %}
 purchase-workflow: "*"
+{% endif -%}
 queue: "*"
 reporting-engine: "*"
 sale-workflow: "*"
@@ -20,25 +46,28 @@ server-env: "*"
 server-tools: "*"
 server-ux: "*"
 social: "*"
+
 {%- if odoo_version  >= 16.0 %}
 stock-logistics-availability: "*"
 stock-logistics-orderpoint: "*"
 stock-logistics-request: "*"
 {% endif -%}
+
 stock-logistics-barcode: "*"
 stock-logistics-reporting: "*"
-stock-logistics-tracking: "*"
-stock-logistics-transport: "*"
 stock-logistics-warehouse: "*"
 stock-logistics-workflow: "*"
 web: "*"
+
 {%- if odoo_version  >= 17.0 %}
 l10n-ecuador: "*"
 {% endif -%}
+
 # modulos propios
 app_store: "*"
 flow_scm: "*"
 merp: "*"
+
 {% if odoo_version == 13.0 -%}
 localizacion_ec: "*"
 hr_addons: "*"
