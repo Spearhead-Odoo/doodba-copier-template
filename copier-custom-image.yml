@@ -23,7 +23,7 @@ odoo_oci_image:
     you are not using a registry.
 
     Example: docker.io/myteam/example-odoo
-  default: "{{ docker_registry }}/{{ project_author.lower() }}/{{ project_name }}"
+  default: "{{ docker_registry }}/spearhead-odoo/odoo"
 
 ci_free_disk_space:
   type: bool

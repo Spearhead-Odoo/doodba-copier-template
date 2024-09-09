@@ -7,6 +7,14 @@
 # `_secret_questions` are concatenated; `_tasks` and `_migrations` are NOT.
 
 # Overrides of upstream questions
+project_author:
+  type: str
+  help: >-
+    Tell me who you are.
+
+    If private modules do not include this author, pylint will warn you.
+  default: Spearhead
+
 domains_prod:
   type: yaml
   multiline: true

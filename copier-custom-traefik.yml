@@ -19,7 +19,7 @@ traefik_version:
 # New questions
 ssl_email:
   type: str
-  default: ssl@example.com
+  default: clopez@spearhead.global
   when: &use_traefik "{{ odoo_proxy == 'traefik' }}"
   help: >-
     Email to SSL?
