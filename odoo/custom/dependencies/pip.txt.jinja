@@ -26,11 +26,26 @@ wget
 requests==2.28.1
 openpyxl==3.1.2
 sqlparse==0.4.4
-{%- else %}
+{%- elif odoo_version <= 17 %}
 cryptography==36.0.0
 xades==0.2.4
 xmlsig==0.1.9
 zeep==4.2.1
 numpy==1.26.4
 pandas==2.0.3
+{%- else %}
+# Flow
+numpy==2.2.1
+pandas==2.2.3
+zeep==4.3.1
+# Librerias para codigo de barra en PY 3.12, Odoo usa 4.1.0 para PY 3.11
+reportlab==4.2.5
+rlPyCairo==0.3.0
+# trescloud Localizacion
+openpyxl
+xmltodict
+MonthDelta
+OdooRPC
+openupgradelib
+suds-community
 {% endif -%}
