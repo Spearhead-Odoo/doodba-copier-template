@@ -303,7 +303,18 @@ traefik_dashboard_password:
 domains_prod:
   type: yaml
   multiline: true
-  default: [{"hosts": ["example.com"]}]
+  default: >-
+    {{
+      [
+        {"hosts": [project_name ~ ".spearhead.global"]},
+        {
+          "hosts": ["www." ~ project_name ~ ".spearhead.global"],
+          "redirect_to": project_name ~ ".spearhead.global",
+          "redirect_permanent": true,
+        },
+      ]
+      | tojson
+    }}
   placeholder: |
     # Main domains, with TLS and cert resolved with "letsencrypt" resolver
     - hosts:
@@ -359,7 +370,18 @@ domains_prod:
 domains_test:
   type: yaml
   multiline: true
-  default: [{"hosts": ["test.example.com"]}]
+  default: >-
+    {{
+      [
+        {"hosts": ["pruebas." ~ project_name ~ ".spearhead.global"]},
+        {
+          "hosts": ["www.pruebas." ~ project_name ~ ".spearhead.global"],
+          "redirect_to": "pruebas." ~ project_name ~ ".spearhead.global",
+          "redirect_permanent": true,
+        },
+      ]
+      | tojson
+    }}
   placeholder: |
     # Main domains, with TLS and cert resolved with "letsencrypt" resolver
     - hosts:
