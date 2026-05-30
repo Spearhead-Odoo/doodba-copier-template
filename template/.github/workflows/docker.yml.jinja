@@ -144,3 +144,57 @@ jobs:
           docker tag {{ odoo_oci_image }}:{{ project_name }}-{{ odoo_version }} {{ odoo_oci_image }}:{{ project_name }}-{{ "${{ github.ref_name }}" }}-{{ "${{ github.sha }}" }}
           docker push {{ odoo_oci_image }}:{{ project_name }}-{{ "${{ github.ref_name }}" }}
           docker push {{ odoo_oci_image }}:{{ project_name }}-{{ "${{ github.ref_name }}" }}-{{ "${{ github.sha }}" }}
+
+  ansible:
+    runs-on: ubuntu-22.04
+    needs: docker
+    steps:
+      - uses: actions/checkout@v4
+      - name: Clone infrastructure repository
+        uses: actions/checkout@v4
+        with:
+          repository: Spearhead-Odoo/spearhead-infrastructure
+          token: {{ "${{ secrets.GIT_TOKEN }}" }}
+          path: spearhead-infrastructure
+      - name: Set working directory
+        run: echo "WORKDIR=$GITHUB_WORKSPACE/spearhead-infrastructure" >> $GITHUB_ENV
+      - name: Set repository name
+        run: echo "REPO_NAME=$(basename $GITHUB_REPOSITORY)" >> $GITHUB_ENV
+      - name: Configurar clave SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo {{ "${{ secrets.ANSIBLE_SSH_KEY }}" }} > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Get python version
+        run: echo "PY=$(python -VV | sha256sum | cut -d' ' -f1)" >> $GITHUB_ENV
+      - name: Install ansible
+        run: |
+          python -m pip install --upgrade pip
+          pip install ansible==11.3.0
+      - name: Set deployment variables
+        run: |
+          if [ {{ "${{ github.event_name }}" }} == "workflow_dispatch" ]; then
+            echo "DEPLOY_TO_TESTING={{ ${{ github.event.inputs.deploy_to_testing }}" }} >> $GITHUB_ENV
+            echo "DEPLOY_TO_PRODUCTION={{ ${{ github.event.inputs.deploy_to_production }}" }} >> $GITHUB_ENV
+          elif [ {{"${{ github.event_name }}" }} == "push" ]; then
+            echo "DEPLOY_TO_TESTING=true" >> $GITHUB_ENV
+            echo "DEPLOY_TO_PRODUCTION=false" >> $GITHUB_ENV
+          fi
+      - name: Run ansible for testing
+        if: {{ ${{ env.DEPLOY_TO_TESTING == 'true' }} }}
+        working-directory: {{ ${{ env.WORKDIR }} }}
+        run: |
+          ansible-playbook -i inventories/test.yaml single-host.yaml \
+            --extra-vars compose_project={{ ${{ env.REPO_NAME }} }} \
+            --extra-vars odoo_autoupdate=true
+            # TODO agregar doodba_enviroment
+      - name: Run ansible for production
+        if: {{ ${{ env.DEPLOY_TO_PRODUCTION == 'true' }} }}
+        working-directory: {{ ${{ env.WORKDIR }} }}
+        run: |
+          ansible-playbook -i inventories/production.yaml single-host.yaml \
+            --extra-vars compose_project={{ ${{ env.REPO_NAME }} }} \
+            --extra-vars odoo_autoupdate=true
