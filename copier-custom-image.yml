@@ -24,3 +24,11 @@ odoo_oci_image:
 
     Example: docker.io/myteam/example-odoo
   default: "{{ docker_registry }}/{{ project_author.lower() }}/{{ project_name }}"
+
+ci_free_disk_space:
+  type: bool
+  default: false
+  help: >-
+    Free disk space in the GitHub Actions runner before building the Odoo image? Enable
+    it if the image build fails because the runner runs out of disk space (it adds some
+    minutes to each run).
