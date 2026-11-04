@@ -3,10 +3,10 @@ name: test
 on:
   pull_request:
     branches:
-      - main
+      - custom
   push:
     branches:
-      - main
+      - custom
   workflow_dispatch:
     inputs:
       pytest_addopts:
