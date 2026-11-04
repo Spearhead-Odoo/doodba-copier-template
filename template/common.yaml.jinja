@@ -45,9 +45,9 @@ services:
       traefik.frontend.passHostHeader: "true"
       traefik.port: "8069"
     {%- endif %}
-  {% if postgres_version -%}
+  {#- Always defined: with an external server only prod skips it #}
   db:
-    image: ghcr.io/tecnativa/postgres-autoconf:{{ postgres_version }}-alpine
+    image: ghcr.io/tecnativa/postgres-autoconf:{{ postgres_version or pg_per_odoo[odoo_version]['latest'] }}-alpine
     shm_size: 4gb
     environment:
       POSTGRES_DB: *dbname
@@ -71,7 +71,6 @@ services:
       retries: 5
       start_period: 15s
       start_interval: 1s
-  {%- endif %}
 
   smtpfake:
     image: docker.io/mailhog/mailhog

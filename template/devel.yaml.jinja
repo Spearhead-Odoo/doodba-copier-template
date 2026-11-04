@@ -113,7 +113,6 @@ services:
       default:
       public:
   {%- endif %}
-  {% if postgres_version -%}
   db:
     extends:
       file: common.yaml
@@ -121,7 +120,6 @@ services:
     environment:
       POSTGRES_DB: *dbname
       POSTGRES_PASSWORD: odoopassword
-  {%- endif %}
 
   pgweb:
     image: docker.io/sosedoff/pgweb

@@ -1,0 +1,25 @@
+# Only for CI: prod uses an external PostgreSQL server, which isn't reachable
+# from CI runners, so tests run against a local container like devel and test.
+# Usage: docker compose --file prod.yaml --file ci.yaml ...
+{% if compose_version == "v1" -%}
+version: "2.4"
+
+{% endif -%}
+services:
+  odoo:
+    environment:
+      PGHOST: db
+      # .docker/db-access.env has the external prod server port
+      PGPORT: 5432
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    extends:
+      file: common.yaml
+      service: db
+    env_file:
+      - .docker/db-creation.env
+
+volumes:
+  db:

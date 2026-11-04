@@ -30,6 +30,10 @@ services:
       # Just in case you use queue_job
       ODOO_QUEUE_JOB_CHANNELS: "root:1"
       PGHOST: {{ _key }}-db
+      {%- if not postgres_version %}
+      # .docker/db-access.env has the external prod server port
+      PGPORT: 5432
+      {%- endif %}
     restart: unless-stopped
     depends_on:
       db:
@@ -102,7 +106,6 @@ services:
       {%- endif %}
     {%- endif %}
 
-  {%- if postgres_version %}
   db:
     extends:
       file: common.yaml
@@ -116,7 +119,6 @@ services:
         aliases:
           - "{{ _key }}-db"
     restart: unless-stopped
-  {%- endif %}
 
   smtp:
     extends:
