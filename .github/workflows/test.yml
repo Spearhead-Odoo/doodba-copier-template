@@ -18,12 +18,12 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.DOODBA_GITHUB_TOKEN }}
   LANG: "en_US.utf-8"
   LC_ALL: "en_US.utf-8"
   PYTEST_ADDOPTS: ${{ github.event.inputs.pytest_addopts }}
   PYTHONIOENCODING: "UTF-8"
-  DOODBA_GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+  DOODBA_GITHUB_TOKEN: "${{ secrets.DOODBA_GITHUB_TOKEN }}"
 jobs:
   pre-commit:
     runs-on: ubuntu-24.04
