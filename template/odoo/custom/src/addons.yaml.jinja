@@ -3,7 +3,7 @@ enterprise: "*"
 account-analytic: "*"
 account-financial-reporting: "*"
 account-financial-tools: "*"
-{%- if odoo_version  > 16.0 %}
+{% if odoo_version > 16.0 -%}
 account-invoice-reporting: "*"
 account-invoicing: "*"
 {% endif -%}
@@ -32,7 +32,7 @@ purchase-workflow:
   - "purchase_request_tier_validation"
   - "purchase_tier_validation"
   - "purchase_tier_validation_forward"
-{%- else %}
+{% else -%}
 purchase-workflow: "*"
 {% endif -%}
 queue: "*"
@@ -45,8 +45,7 @@ server-env: "*"
 server-tools: "*"
 server-ux: "*"
 social: "*"
-
-{%- if odoo_version  >= 16.0 %}
+{% if odoo_version >= 16.0 -%}
 stock-logistics-availability: "*"
 stock-logistics-orderpoint: "*"
 stock-logistics-request: "*"
@@ -58,10 +57,6 @@ stock-logistics-warehouse: "*"
 stock-logistics-workflow: "*"
 web: "*"
 
-{%- if odoo_version  >= 17.0 %}
-l10n-ecuador: "*"
-{% endif -%}
-
 # modulos propios
 app_store: "*"
 flow_scm: "*"
@@ -72,7 +67,7 @@ localizacion_ec: "*"
 hr_addons: "*"
 custom_tools: "*"
 themes: "*"
-{%- elif odoo_version  >= 17.0 %}
+{% elif odoo_version >= 17.0 -%}
 odoo_generic_addons: "*"
 theme_prime: "*"
 {% endif -%}
