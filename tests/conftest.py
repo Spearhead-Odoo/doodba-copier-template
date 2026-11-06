@@ -9,15 +9,38 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Union
 
+import copier
 import pytest
 import yaml
-from copier import run_copy
 from copier._template import load_template_config
 from plumbum import ProcessExecutionError, local
 from plumbum.cmd import git, invoke
 from python_on_whales import DockerClient, DockerException, docker
 
 _logger = logging.getLogger(__name__)
+
+# Some custom defaults break tests running in parallel, so tests use upstream
+# defaults unless they pass their own values:
+# - odoo_oci_image is the same for every generated project, so they would build
+#   and overwrite the same image.
+# - domains_prod/domains_test add Traefik routers with the letsencrypt resolver,
+#   which the Traefik test container logs as errors.
+# Patched here because conftest is imported before the test modules import
+# run_copy.
+UPSTREAM_DEFAULTS = {
+    "odoo_oci_image": "",
+    "domains_prod": {},
+    "domains_test": {},
+}
+_original_run_copy = copier.run_copy
+
+
+def run_copy(*args, **kwargs):
+    kwargs["data"] = {**UPSTREAM_DEFAULTS, **(kwargs.get("data") or {})}
+    return _original_run_copy(*args, **kwargs)
+
+
+copier.run_copy = run_copy
 
 # Use copier's loader to resolve the `!include copier-custom.yml` overrides
 COPIER_SETTINGS = load_template_config(Path("copier.yml"))
