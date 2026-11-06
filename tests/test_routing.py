@@ -84,7 +84,18 @@ def test_multiple_domains(
         remove=True,
     )
     docker.compose.up(detach=True)
-    time.sleep(10)
+    # Custom: Odoo takes longer to start (workers, enterprise), so wait until
+    # Traefik routes to it instead of a fixed sleep
+    for _attempt in range(30):
+        time.sleep(2)
+        try:
+            ready = requests.get(f"http://main3.{base_domain}:8080/alt/foo")
+        except requests.ConnectionError:
+            continue
+        if "Werkzeug" in ready.headers.get("Server", ""):
+            break
+    else:
+        print(docker.compose.logs("odoo"))
     # XXX Remove all Traefik 1 tests once it disappears
     if is_traefik1:
         # main0, globally redirected to TLS

@@ -96,7 +96,8 @@ def test_postgresql_exposed(
     )
     test_config = DockerClient(compose_files=["prod.yaml"]).compose.config()
     db_container = test_config.services["db"]
-    assert db_container.environment["WAN_DATABASES"] == '["prod"]'
+    # Custom: postgres_exposed_databases defaults to [postgres_dbname] (project_name)
+    assert db_container.environment["WAN_DATABASES"] == f'["{project_name}"]'
     assert db_container.environment["WAN_USERS"] == '["readonly_user"]'
     assert "WAN_AUTH_METHOD" not in db_container.environment
     traefik_router = f"traefik.tcp.routers.{project_name}-{str(supported_odoo_version).replace('.', '-')}-prod-database"  # noqa: E501

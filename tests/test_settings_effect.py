@@ -104,10 +104,14 @@ def test_dbfilter_default(
             lambda env: DockerClient(compose_files=[f"{env}.yaml"]).compose.config(),
             ("devel", "test", "prod"),
         )
-        assert "DB_FILTER" not in devel.services["odoo"].environment
+        # Custom: devel filters its own database and postgres_dbname defaults to
+        # project_name
+        assert devel.services["odoo"].environment["DB_FILTER"] == "devel"
         assert "DB_FILTER" not in test.services["odoo"].environment
-        assert prod.services["odoo"].environment["DB_FILTER"] == "^prod"
-        assert prod.services["backup"].environment["DBS_TO_INCLUDE"] == "^prod"
+        assert prod.services["odoo"].environment["DB_FILTER"] == "^myproject-odoo"
+        assert (
+            prod.services["backup"].environment["DBS_TO_INCLUDE"] == "^myproject-odoo"
+        )
 
 
 def test_dbfilter_custom_odoo_extensions(
