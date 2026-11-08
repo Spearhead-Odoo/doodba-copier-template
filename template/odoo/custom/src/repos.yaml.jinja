@@ -85,11 +85,9 @@
     depth: $DEPTH_MERGE
   remotes:
     origin: https://github.com/Spearhead-Odoo/bank-payment.git
-    oca: https://github.com/OCA/bank-payment.git
   target: origin $ODOO_VERSION
   merges:
     - origin $ODOO_VERSION
-    - oca refs/pull/1013/head
 ./purchase-workflow:
   defaults:
     depth: $DEPTH_MERGE
@@ -124,11 +122,10 @@
     depth: $DEPTH_MERGE
   remotes:
     origin: https://github.com/Spearhead-Odoo/stock-logistics-warehouse.git
-    oca: https://github.com/OCA/stock-logistics-warehouse.git
   target: origin $ODOO_VERSION
   merges:
     - origin $ODOO_VERSION
-    - oca refs/pull/1381/head
+    - origin 13.0-account-move-line-stock-info-hook
     - origin 13.0-i18n
 {%- elif odoo_version >= 17.0 %}
 ./app_store:
