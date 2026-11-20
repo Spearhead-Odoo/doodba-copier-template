@@ -28,7 +28,7 @@ on:
         default: false
 
 env:
-  INFRA_REPOSITORY: Spearhead-Odoo/spearhead-infrastructure
+  INFRA_REPOSITORY: Spearhead-Odoo/doodba-infrastructure
   # Inventory projects are named after their repository
   PROJECT: ${{ github.event.repository.name }}
   DEPLOY_ENV: ${{ inputs.env }}
