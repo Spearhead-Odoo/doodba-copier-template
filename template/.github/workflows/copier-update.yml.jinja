@@ -49,6 +49,7 @@ jobs:
         id: update
         run: |
           title="[{{ odoo_version }}] Update copier template to"
+          base="$(git rev-parse HEAD)"
           # Each answers file is a different template; copier refuses to
           # update a dirty tree, so commit after each one
           for answers in .copier-answers.yml .ai-framework.yml; do
@@ -68,6 +69,9 @@ jobs:
             git diff --cached --quiet ||
               git commit --no-verify -qm "Update from $answers to $version"
           done
+          # Squash the temporary commits so pre-commit fixes and the update
+          # land in the single commit made by the PR action
+          git reset --soft "$base"
           echo "title=$title" >> "$GITHUB_OUTPUT"
       - name: Run pre-commit
         id: precommit
