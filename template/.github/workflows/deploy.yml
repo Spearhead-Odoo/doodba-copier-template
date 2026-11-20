@@ -28,7 +28,7 @@ on:
         default: false
 
 env:
-  INFRA_REPOSITORY: celm1990/spearhead-infrastructure
+  INFRA_REPOSITORY: celm1990/doodba-infrastructure
   # Inventory projects are named after their repository
   PROJECT: ${{ github.event.repository.name }}
   DEPLOY_ENV: ${{ inputs.env }}
